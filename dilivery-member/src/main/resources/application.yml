@@ -1,0 +1,59 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /member
+
+
+spring:
+  application:
+    name: bosc-backend
+  datasource:
+    url: jdbc:mysql://192.168.0.142:3306/bosc?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC&useSSL=false&allowMultiQueries=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    initialSize: 20
+    maxActive: 20
+    validationQuery: SELECT 1
+    testOnBorrow: true
+    testWhileIdle: true
+    testOnReturn: true
+    minEvictableIdleTimeMillis: 5000
+    timeBetweenEvictionRunsMillis: 8000
+    max-idle: 20
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 20MB
+
+mybatis:
+   mapper-locations: classpath:mapper/*.xml
+   type-aliases-package: com.clown.member.mapper
+
+#配置分页插件pagehelper
+pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql
+
+dubbo:
+  application:
+    name: member-service
+  scan:
+    base-packages: com.clown.member.service.impl
+  protocol:
+    name: dubbo
+    prot: 10001
+  registry:
+    protocol: zookeeper
+    address: 127.0.0.1:2181
+    id: member-id
+  version: 1.0.0
+  provider:
+    retries: 1
+    delay: -1
+
+
+
+

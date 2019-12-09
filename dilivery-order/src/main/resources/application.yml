@@ -1,0 +1,39 @@
+server:
+  port: 8099
+  servlet:
+    context-path: /order
+
+spring:
+  application:
+    name: bosc-backend
+  datasource:
+    url: jdbc:mysql://192.168.0.142:3306/bosc?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC&useSSL=false&allowMultiQueries=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    initialSize: 20
+    maxActive: 20
+    validationQuery: SELECT 1
+    testOnBorrow: true
+    testWhileIdle: true
+    testOnReturn: true
+    minEvictableIdleTimeMillis: 5000
+    timeBetweenEvictionRunsMillis: 8000
+    max-idle: 20
+
+
+dubbo:
+  application:
+    name: order-service
+  registry:
+    protocol: zookeeper
+    address: 127.0.0.1:2181
+    id: order-service
+  protocol:
+    name: dubbo
+    port: 10002
+  version: 1.0.0
+#  scan:
+#    base-packages: com.clown.order.service.impl
+  consumer:
+    timeout: 5000
